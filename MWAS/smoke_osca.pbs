@@ -1,0 +1,31 @@
+#PBS -N smoke_osca
+#PBS -q normal
+#PBS -A sf
+#PBS -S /bin/bash
+#PBS -r n
+#PBS -l select=1:ncpus=4:mem=64GB
+#PBS -l walltime=99:00:00
+
+cd /home/uqxqian/90days/Prediction/ML_linear/smoke_osca
+
+
+
+/home/uqxqian/90days/osca_Linux --befile /home/uqxqian/90days/Prediction/ML_linear/beta/LBC36 --std-probe --pheno /home/uqxqian/90days/Prediction/ML_linear/beta/smoke.pheno  --moa --out smoke_osca/smoke_LBC36_moa
+
+/home/uqxqian/90days/osca_Linux --befile /home/uqxqian/90days/Prediction/ML_linear/beta/LBC36 --std-probe --pheno /home/uqxqian/90days/Prediction/ML_linear/beta/smoke.pheno  --moment --out smoke_LBC36_moment --moment-num 20
+
+/home/uqxqian/90days/osca_Linux --befile /home/uqxqian/90days/Prediction/ML_linear/beta/LBC36 --std-probe --pheno /home/uqxqian/90days/Prediction/ML_linear/beta/smoke.pheno  --moment2-beta --out smoke_LBC36_moment2 --loud
+
+/home/uqxqian/90days/osca_Linux --befile /home/uqxqian/90days/Prediction/ML_linear/beta/LBC36 --std-probe --pheno /home/uqxqian/90days/Prediction/ML_linear/beta/smoke.pheno  --linear --out smoke_LBC36_linear
+
+wait
+Rscript get_score.R
+wait
+
+/home/uqxqian/90days/osca_Linux --befile /home/uqxqian/90days/Prediction/ML_linear/beta/LBC21 --score smoke_LBC36_moa.score --score-has-header --out smoke_LBC21_moa.prs
+
+/home/uqxqian/90days/osca_Linux --befile /home/uqxqian/90days/Prediction/ML_linear/beta/LBC21 --score smoke_LBC36_moment.score --score-has-header --out smoke_LBC21_moment.prs
+
+/home/uqxqian/90days/osca_Linux --befile /home/uqxqian/90days/Prediction/ML_linear/beta/LBC21 --score smoke_LBC36_moment2.score --score-has-header --out smoke_LBC21_moment2.prs
+
+/home/uqxqian/90days/osca_Linux --befile /home/uqxqian/90days/Prediction/ML_linear/beta/LBC21 --score smoke_LBC36_linear.score --score-has-header --out smoke_LBC21_linear.prs

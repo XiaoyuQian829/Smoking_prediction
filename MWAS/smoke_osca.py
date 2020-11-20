@@ -1,0 +1,13 @@
+a=read.table("smoking_LBC36_linear.linear",header=T)
+thresh=0.05/dim(a)[1]
+idx=which(a[,8]<thresh)
+write.table(a[idx,c(2,6)],"smoking_LBC36_linear.score",col.names=T,row.names=F,quote=F,sep='\t')
+a=read.table("smoking_LBC36_moa.moa",header=T)
+idx=which(a[,8]<thresh)
+write.table(a[idx,c(2,6)],"smoking_LBC36_moa.score",col.names=T,row.names=F,quote=F,sep='\t')
+a=read.table("smoking_LBC36_moment.moment",header=T)
+idx=which(a[,8]<thresh)
+write.table(a[idx,c(2,6)],"smoking_LBC36_moment.score",col.names=T,row.names=F,quote=F,sep='\t')
+a=read.table("smoking_LBC36_moment2.moment",header=T)
+idx=which(a[,8]<thresh)
+write.table(a[idx,c(2,6)],"smoking_LBC36_moment2.score",col.names=T,row.names=F,quote=F,sep='\t')
